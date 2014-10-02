@@ -35,4 +35,35 @@ describe 'Categories API' do
       expect(response.body).to eql(Category.all.to_json)
     end
   end
+
+  context 'updating categories' do
+    before do
+      @category = Category.create!(name: 'Ruby on Rails')
+    end
+
+    it 'updates an existing category' do
+      put "/api/v1/categories/#{@category.id}", { category: { name: 'Rails 4' } }.to_json, { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
+
+      expect(response.status).to eq(204)
+      expect(response.body).to eq('')
+
+      @category.reload
+      expect(@category.name).to eq('Rails 4')
+    end
+
+    it 'does not update an existing category without a name' do
+      put "/api/v1/categories/#{@category.id}", { category: { name: nil } }.to_json, { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
+
+      expect(response.status).to eq(422)
+      category = JSON.parse(response.body, symbolize_names: true)
+      expect(category[:errors]).to eql(:name => ['can\'t be blank'])
+    end
+
+    it 'returns 404 if invalid category id' do
+      @category.destroy
+      put "/api/v1/categories/#{@category.id}", { category: { name: 'Rails 4' } }.to_json, { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
+
+      expect(response.status).to eq(404)
+    end
+  end
 end
