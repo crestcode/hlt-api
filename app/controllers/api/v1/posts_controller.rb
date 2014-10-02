@@ -31,11 +31,4 @@ class Api::V1::PostsController < ApplicationController
     @post = Post.find_by_id(params[:id])
     render json: {error: 'The post you were looking for could not be found'}, status: 404 unless @post
   end
-
-  def token_authentication
-    authenticate_or_request_with_http_token do |token, options|
-      ApiKey.exists?(token: token)
-    end
-  end
-
 end
