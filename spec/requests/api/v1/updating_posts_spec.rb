@@ -29,7 +29,7 @@ describe 'Posts API' do
       }
 
       expect(response.status).to eq(422)
-      post = JSON.parse(response.body, symbolize_names: true)
+      post = json(response.body)
       expect(post[:errors]).to include(:title => ['can\'t be blank'])
       expect(post[:errors]).to include(:content => ['can\'t be blank'])
     end
@@ -44,7 +44,7 @@ describe 'Posts API' do
       }
 
       expect(response.status).to eq(404)
-      post = JSON.parse(response.body, symbolize_names: true)
+      post = json(response.body)
       expect(post[:error]).to eql('The post you were looking for could not be found')
     end
 

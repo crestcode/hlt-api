@@ -29,7 +29,7 @@ describe 'Categories API' do
       }
 
       expect(response.status).to eq(422)
-      category = JSON.parse(response.body, symbolize_names: true)
+      category = json(response.body)
       expect(category[:errors]).to eql(:name => ['can\'t be blank'])
     end
 
@@ -43,7 +43,7 @@ describe 'Categories API' do
       }
 
       expect(response.status).to eq(404)
-      category = JSON.parse(response.body, symbolize_names: true)
+      category = json(response.body)
       expect(category[:error]).to eql('The category you were looking for could not be found')
     end
 

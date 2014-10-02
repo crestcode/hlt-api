@@ -15,7 +15,7 @@ describe 'Categories API' do
       expect(response.status).to eq(201)
       expect(response.content_type).to eq(Mime::JSON)
 
-      category = JSON.parse(response.body, symbolize_names: true)
+      category = json(response.body)
       expect(response.location).to eq(api_v1_category_url(category[:id]))
       expect(category[:name]).to eq('Ruby on Rails')
     end
@@ -28,7 +28,7 @@ describe 'Categories API' do
       }
 
       expect(response.status).to eq(422)
-      category = JSON.parse(response.body, symbolize_names: true)
+      category = json(response.body)
       expect(category[:errors]).to eql(:name => ['can\'t be blank'])
     end
 

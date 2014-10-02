@@ -15,7 +15,7 @@ describe 'Posts API' do
       expect(response.status).to eq(201)
       expect(response.content_type).to eq(Mime::JSON)
 
-      post = JSON.parse(response.body, symbolize_names: true)
+      post = json(response.body)
       expect(response.location).to eq(api_v1_post_url(post[:id]))
       expect(post[:title]).to eq('Rails 4.2 released')
       expect(post[:content]).to eq('Get it while it\'s hot!')
@@ -29,7 +29,7 @@ describe 'Posts API' do
       }
 
       expect(response.status).to eq(422)
-      post = JSON.parse(response.body, symbolize_names: true)
+      post = json(response.body)
       expect(post[:errors]).to include(:title => ['can\'t be blank'])
       expect(post[:errors]).to include(:content => ['can\'t be blank'])
     end
