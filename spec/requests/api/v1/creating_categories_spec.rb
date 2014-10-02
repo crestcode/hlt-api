@@ -32,6 +32,19 @@ describe 'Categories API' do
       expect(category[:errors]).to eql(:name => ['can\'t be blank'])
     end
 
+    it 'does not create a category without a unique name' do
+      Category.create!(name: 'Ruby on Rails')
+      post '/api/v1/categories', { category: { name: 'Ruby on Rails' } }.to_json, {
+          'Accept' => 'application/json',
+          'Content-Type' => 'application/json',
+          'Authorization' => "Token token=\"#{@api_key.token}\""
+      }
+
+      expect(response.status).to eq(422)
+      category = json(response.body)
+      expect(category[:errors]).to eql(:name => ['has already been taken'])
+    end
+
     it 'does not create a new category without a valid api key token' do
       @api_key.destroy
 
