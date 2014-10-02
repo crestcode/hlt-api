@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Categories API' do
-
   context 'creating categories' do
     before do
       @api_key = ApiKey.create!
