@@ -1,5 +1,6 @@
 class Api::V1::CategoriesController < ApplicationController
   before_action :get_category, only: :update
+  before_action :token_authentication, only: [:create, :update]
   respond_to :json
 
   def index
@@ -28,6 +29,12 @@ class Api::V1::CategoriesController < ApplicationController
 
   def get_category
     @category = Category.find_by_id(params[:id])
-    render json: { error: 'The category you were looking for could not be found'}, status: 404 unless @category
+    render json: {error: 'The category you were looking for could not be found'}, status: 404 unless @category
+  end
+
+  def token_authentication
+    authenticate_or_request_with_http_token do |token, options|
+      ApiKey.exists?(token: token)
+    end
   end
 end
