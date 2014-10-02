@@ -28,6 +28,6 @@ class Api::V1::CategoriesController < ApplicationController
 
   def get_category
     @category = Category.find_by_id(params[:id])
-    render json: {}, status: 404 unless @category
+    render json: { error: 'The category you were looking for could not be found'}, status: 404 unless @category
   end
 end

@@ -64,6 +64,8 @@ describe 'Categories API' do
       put "/api/v1/categories/#{@category.id}", { category: { name: 'Rails 4' } }.to_json, { 'Accept' => 'application/json', 'Content-Type' => 'application/json' }
 
       expect(response.status).to eq(404)
+      category = JSON.parse(response.body, symbolize_names: true)
+      expect(category[:error]).to eql('The category you were looking for could not be found')
     end
   end
 end
