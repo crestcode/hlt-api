@@ -9,7 +9,11 @@ and RSpec.
 To install:
 
 1) git clone git@github.com:crestcode/hlt-api.git
+
 2) cd hlt-api
+
 3) bundle install
+
 4) rake db:migrate
+
 5) rspec
