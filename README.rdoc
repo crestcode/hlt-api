@@ -1,8 +1,8 @@
 == HLT API
 
 A blog API that allows the user to create, update, and list blog posts and categories. Features include HTTP
-token authentication, versioning, and pagination. Gems include Rails 4.1, Active Model Serializers, Kaminari,
-and RSpec.
+token authentication, versioning, pagination, and caching (v2). Gems include Rails 4.1, Active Model Serializers,
+JBuilder, Kaminari, and RSpec.
 
 == Getting Started
 
