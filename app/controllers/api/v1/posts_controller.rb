@@ -24,7 +24,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.fetch(:post, {}).permit(:title, :content)
+    params.fetch(:post, {}).permit(:title, :content, category_ids: [])
   end
 
   def get_post
