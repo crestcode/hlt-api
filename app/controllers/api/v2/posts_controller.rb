@@ -4,7 +4,8 @@ class Api::V2::PostsController < ApplicationController
   respond_to :json
 
   def index
-    respond_with(Post.page(params[:page]))
+    @posts = Post.page(params[:page])
+    respond_with(@posts)
   end
 
   def create

@@ -4,7 +4,8 @@ class Api::V2::CategoriesController < ApplicationController
   respond_to :json
 
   def index
-    respond_with(Category.page(params[:page]))
+    @categories = Category.page(params[:page])
+    respond_with(@categories)
   end
 
   def create
