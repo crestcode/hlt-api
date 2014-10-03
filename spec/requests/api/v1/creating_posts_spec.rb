@@ -6,7 +6,8 @@ describe 'Posts API' do
       @api_key = ApiKey.create!
     end
     it 'creates a new post' do
-      post '/api/v1/posts', { post: { title: 'Rails 4.2 released', content: 'Get it while it\'s hot!' } }.to_json, {
+      category = Category.create!(name: 'Ruby on Rails')
+      post '/api/v1/posts', { post: { title: 'Rails 4.2 released', content: 'Get it while it\'s hot!', category_ids: [category.id] } }.to_json, {
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
           'Authorization' => "Token token=\"#{@api_key.token}\""
@@ -19,6 +20,8 @@ describe 'Posts API' do
       expect(response.location).to eq(api_v1_post_url(post[:id]))
       expect(post[:title]).to eq('Rails 4.2 released')
       expect(post[:content]).to eq('Get it while it\'s hot!')
+      expect(post[:categories].any? { |c| c[:id] == category.id }).to be(true)
+
     end
 
     it 'does not create a post without a title or content' do

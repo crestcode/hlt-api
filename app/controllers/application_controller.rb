@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
       ApiKey.exists?(token: token)
     end
   end
+
+  def default_serializer_options
+    {root: false}
+  end
 end
