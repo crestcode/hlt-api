@@ -4,5 +4,10 @@ Rails.application.routes.draw do
       resources :categories, only: [:index, :create, :update]
       resources :posts, only: [:index, :create, :update]
     end
+
+    namespace :v2 do
+      resources :categories, only: [:index, :create, :update]
+      resources :posts, only: [:index, :create, :update]
+    end
   end
 end
